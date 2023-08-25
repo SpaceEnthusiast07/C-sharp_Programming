@@ -1,0 +1,94 @@
+
+string[] acceptedValues = { "e", "encrypt", "d", "decrypt", "q", "quit" };
+
+
+void mainScreen()
+{
+    Console.Clear();
+    Console.Title = "Encryption";
+    Console.WriteLine("Encryption Algorithm");
+
+    try
+    {
+        Console.Write("\nEncrypt[e] \t Decrypt[d] \t Quit[q] \t");
+        string choice = Console.ReadLine().ToLower();
+        if(Array.Exists(acceptedValues, element => element == choice)) 
+        {
+            switch(choice)
+            {
+                case "e": Encrypt(); break;
+                case "encrypt": Encrypt(); break;
+                case "d": Console.WriteLine("\n\n\nYou need to encrypt first"); Thread.Sleep(1000); Console.Clear(); mainScreen(); break;
+                case "decrypt": Console.WriteLine("\n\n\nYou need to encrypt first"); Thread.Sleep(1000); Console.Clear(); mainScreen(); break;
+            }
+        }
+        else
+        {
+            Console.WriteLine("\n\n\nInvaild input");
+            Thread.Sleep(1000);
+            mainScreen();
+        }
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        Thread.Sleep(1000);
+        mainScreen();
+    }
+    
+    Console.ReadKey();
+}
+
+
+
+
+string Encrypt()
+{
+    Console.Clear();
+    Console.WriteLine("Encryption Algorithm");
+    Console.Write("\nPassword to encrypt: ");
+    string password = Console.ReadLine();
+
+
+    int eKey = 4;
+    string ePassword = "";
+    int count = 0;
+
+
+    foreach(char letter in password)
+    {
+        int ASCIILetter = Convert.ToInt16(letter);                        //Converts the letter to it's ASCII value
+        char eLetter = Convert.ToChar(ASCIILetter + eKey);                //Shifts the letter forward in the alphabet
+        ePassword += eLetter;                                             //Adds on the encrypted letter to the ecrypted password variable
+    }
+
+
+    Random random = new Random();
+    string ePasswordV2 = "";
+
+    
+    while(count < ePassword.Length)
+    {
+        char randLetter = Convert.ToChar(random.Next(32, 127));           //Creates a random letter
+        ePasswordV2 += String.Concat(randLetter, ePassword[count]);       //Adds on the random letter and letter of ePassword to the final ePassword
+        count++;
+    }
+    
+
+    return ePasswordV2;
+}
+
+
+
+
+string Decrypt(string ePassword)
+{
+    Console.Clear();
+    Console.WriteLine("Work in progress");
+    return null;
+}
+
+
+
+
+mainScreen();
